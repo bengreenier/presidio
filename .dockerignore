@@ -76,5 +76,6 @@ venv/
 # IDE
 .idea
 .vscode
+.devcontainer/.*/
 docs/
 charts/
