@@ -2,12 +2,12 @@
 if [[ -z "$FAST_USER_MODE" ]]; then
   # Install analyzer deps
   # Something up with spacy - the double install helps
-  cd /workspaces/src/presidio/presidio-analyzer \
+  cd /workspaces/src/github.com/Microsoft/presidio/presidio-analyzer \
     && pipenv install --dev --sequential \
     && pipenv install spacy
 
   # Install go deps
-  cd /workspaces/src/presidio \
+  cd /workspaces/src/github.com/Microsoft/presidio \
     && echo "Running dep ensure..." \
     && dep ensure \
     && echo "Dep ensure ran."
@@ -17,6 +17,6 @@ else
 fi
 
 # Restore top-level folder
-cd /workspaces/src/presidio
+cd /workspaces/src/github.com/Microsoft/presidio
 
 $@

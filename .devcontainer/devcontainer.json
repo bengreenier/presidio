@@ -1,11 +1,16 @@
 {
   "context": "../",
   "runArgs": [
-    "-v", "${workspaceFolder}/.devcontainer/.pipenv-cache:/mnt/pipenv-cache",
-    "-v", "${workspaceFolder}/.devcontainer/.dep-cache:/mnt/dep-cache",
-    "-v", "/var/run/docker.sock:/var/run/docker.sock"
+    "-v",
+    "${localWorkspaceFolder}/.devcontainer/.pipenv-cache:/mnt/pipenv-cache",
+    "-v",
+    "${localWorkspaceFolder}/.devcontainer/.dep-cache:/mnt/dep-cache",
+    "-v",
+    "/var/run/docker.sock:/var/run/docker.sock"
   ],
   "dockerFile": "Dockerfile",
-  "workspaceMount": "/workspaces/src/presidio",
-  "overrideCommand": false
+  "workspaceMount": "src=${localWorkspaceFolder}/,dst=/workspaces/src/github.com/Microsoft/presidio,type=bind,consistency=delegated",
+  "workspaceFolder": "/workspaces/src/github.com/Microsoft/presidio",
+  "overrideCommand": true,
+  "postCreateCommand": "/entrypoint.sh"
 }

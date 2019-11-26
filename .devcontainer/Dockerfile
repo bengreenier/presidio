@@ -7,7 +7,7 @@
 #     RE2_VER: The re2 version to use (year-month-day)
 #
 #   Mount points:
-#     /workspaces/src/presidio: The root project dir
+#     /workspaces/src/github.com/Microsoft/presidio: The root project dir
 #     /mnt/pipenv-cache: The pipenv cache
 #     /mnt/dep-cache: The go-dep cache
 #
@@ -30,12 +30,13 @@ RUN apt-get update \
   ca-certificates \
   gnupg2 \
   software-properties-common \
-  git
+  git \
+  net-tools
 
 # GO recommends installing their source via direct download
 # We do so, and configure the system to be aware of it
 ARG GO_VER="1.13.4"
-RUN curl https://dl.google.com/go/go${GO_VER}.linux-amd64.tar.gz | tar -xz -C /usr/local 
+RUN curl https://dl.google.com/go/go${GO_VER}.linux-amd64.tar.gz | tar -xz -C /usr/local
 ENV PATH="/usr/local/go/bin:${PATH}"
 ENV GOROOT="/usr/local/go"
 
@@ -71,9 +72,9 @@ RUN tmp_dir=$(mktemp -d) \
 # Install docker (so we can docker in docker)
 RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
   && add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/debian \
-   $(lsb_release -cs) \
-   stable" \
+  "deb [arch=amd64] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) \
+  stable" \
   && apt-get update \
   && apt-get install -y docker-ce-cli
 
@@ -81,7 +82,7 @@ RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
 RUN rm -rf /var/lib/apt/lists/*
 
 # Expect that presidio source is mounted
-VOLUME [ "/workspaces/src/presidio" ]
+VOLUME [ "/workspaces/src/github.com/Microsoft/presidio" ]
 ENV GOPATH="/workspaces"
 
 # We also pull in our entrypoint configuration
